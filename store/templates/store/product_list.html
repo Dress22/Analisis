@@ -1,0 +1,22 @@
+{% extends 'store/base.html' %}
+{% block content %}
+<h1>Tienda SheinPirata</h1>
+<ul class="product-list">
+    {% for product in products %}
+    <li>
+        {% if product.image %}
+            <img src="{{ product.image.url }}" width="150" alt="{{ product.name }}">
+        {% endif %}
+        <h2>{{ product.name }}</h2>
+        <p>{{ product.description }}</p>
+        <p><strong>${{ product.price }}</strong></p>
+        <form action="{% url 'purchase_product' product.pk %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Comprar</button>
+        </form>
+    </li>
+    {% empty %}
+    <li>No hay productos disponibles.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
